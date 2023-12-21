@@ -57,8 +57,3 @@ jobs:
 
       - name: search for region
         run: env | grep AWS_REGION
-
-      # - name: Pulumi up
-      #   run: pulumi up -y --skip-preview -s dev
-      #   env: 
-      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
