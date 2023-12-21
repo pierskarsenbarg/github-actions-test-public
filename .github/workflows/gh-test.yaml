@@ -30,7 +30,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::052848974346:role/piers-github-role
           role-session-name: githubactions
@@ -43,9 +43,6 @@ jobs:
         run: pulumi login
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-      - name: Select Pulumi Stack
-        run: pulumi stack select dev
 
       - name: Pulumi About
         run: pulumi about
