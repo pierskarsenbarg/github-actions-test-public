@@ -32,9 +32,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          role-to-assume: arn:aws:iam::052848974346:role/piers-github-role
+          role-session-name: githubactions
           aws-region: eu-west-1
 
       - name: Pulumi Version
@@ -48,14 +47,11 @@ jobs:
       - name: Select Pulumi Stack
         run: pulumi stack select dev
 
+      - name: Pulumi About
+        run: pulumi about
+
       - name: Pulumi preview
         run: pulumi preview
-        env:
-          PULUMI_STACK: dev
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-      - name: Pulumi up
-        run: pulumi up -f
         env:
           PULUMI_STACK: dev
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
