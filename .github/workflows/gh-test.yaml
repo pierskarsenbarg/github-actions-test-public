@@ -34,7 +34,7 @@ jobs:
         with:
           role-to-assume: ${{secrets.AWS_ASSUME_ROLE}}
           role-session-name: githubactions
-          aws-region: eu-west-1
+          # aws-region: eu-west-1
 
       - name: Pulumi Version
         run: pulumi version
