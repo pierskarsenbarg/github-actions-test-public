@@ -15,33 +15,25 @@ jobs:
   steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Setup Node
-      uses: actions/setup-node@v1
-      with:
-      node-version: 14.x
     
     - name: Set up Python 3.7
-        uses: actions/setup-python@v2
-        with:
+      uses: actions/setup-python@v2
+      with:
         python-version: 3.7
 
     - name: Install dependencies
       run: |
-      python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Install npm
-      run: npm install
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
-        role-to-assume: arn:aws:iam::052848974346:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AdministratorAccess_5b5d58a7c435da2d
-        role-duration-seconds: 900
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v3
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: eu-west-1
+    #     role-to-assume: arn:aws:iam::052848974346:role/aws-reserved/sso.amazonaws.com/us-west-2/AWSReservedSSO_AdministratorAccess_5b5d58a7c435da2d
+    #     role-duration-seconds: 900
 
     - name: Login to Pulumi
       run: pulumi login
@@ -49,10 +41,10 @@ jobs:
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
     - name: Select Pulumi Stack
-      run: pulumi stack select "enjoei/${{ env.STACK }}"
+      run: pulumi stack select dev
 
     - name: Pulumi preview
       run: pulumi preview
       env:
-      PULUMI_STACK: ${{ env.STACK }}
-      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        PULUMI_STACK: dev
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
